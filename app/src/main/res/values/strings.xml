@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">CodeMate</string>
+    <string name="tagline">Your pocket programming tutor.</string>
+    <string name="title_home">Home</string>
+    <string name="title_chat">Chat</string>
+    <string name="title_learn">Learn</string>
+    <string name="title_quiz">Quiz</string>
+    <string name="title_progress">Progress</string>
+</resources>
