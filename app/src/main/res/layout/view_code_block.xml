@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/codeBlockCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/spacing_s"
+    app:cardBackgroundColor="@color/code_background"
+    app:cardCornerRadius="@dimen/corner_radius_m"
+    app:cardElevation="@dimen/elevation_flat"
+    app:strokeColor="@color/code_header"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Top Header: Language Tag + Copy Button -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/code_header"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/spacing_m"
+            android:paddingVertical="@dimen/spacing_xs">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvCodeLanguage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="monospace"
+                android:text="kotlin"
+                android:textAppearance="?attr/textAppearanceLabelMedium"
+                android:textColor="@color/code_keyword" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCopyCode"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="@string/cd_copy_code"
+                app:icon="@drawable/ic_copy"
+                app:iconTint="@color/code_text" />
+
+        </LinearLayout>
+
+        <!-- Code Content Area (horizontally scrollable monospace) -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            android:scrollbars="horizontal">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvCodeContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:padding="@dimen/spacing_m"
+                android:textAppearance="?attr/textAppearanceBodySmall"
+                android:textColor="@color/code_text"
+                android:textIsSelectable="true" />
+
+        </HorizontalScrollView>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

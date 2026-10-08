@@ -1,0 +1,37 @@
+package com.mit.tushar_kaldate.ui.models
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.mit.tushar_kaldate.R
+import com.mit.tushar_kaldate.core.ui.UiText
+import com.mit.tushar_kaldate.databinding.FragmentModelManagerBinding
+
+class ModelManagerFragment : Fragment() {
+
+    private var _binding: FragmentModelManagerBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentModelManagerBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.modelsEmptyState.setTitle(UiText.DynamicString("Model Catalog"))
+        binding.modelsEmptyState.setSubtitle(UiText.DynamicString("Download, import, and test on-device LLM models for offline tutoring."))
+        binding.modelsEmptyState.setIcon(R.drawable.ic_code)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navigation_home">
+
+    <!-- Bottom Navigation Destinations -->
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.mit.tushar_kaldate.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_to_explain"
+            app:destination="@id/navigation_explain" />
+        <action
+            android:id="@+id/action_home_to_debug"
+            app:destination="@id/navigation_debug" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_chat"
+        android:name="com.mit.tushar_kaldate.ui.chat.ChatFragment"
+        android:label="@string/title_chat"
+        tools:layout="@layout/fragment_chat" />
+
+    <fragment
+        android:id="@+id/navigation_learn"
+        android:name="com.mit.tushar_kaldate.ui.learn.LearnFragment"
+        android:label="@string/title_learn"
+        tools:layout="@layout/fragment_learn" />
+
+    <fragment
+        android:id="@+id/navigation_quiz"
+        android:name="com.mit.tushar_kaldate.ui.quiz.QuizFragment"
+        android:label="@string/title_quiz"
+        tools:layout="@layout/fragment_quiz" />
+
+    <fragment
+        android:id="@+id/navigation_progress"
+        android:name="com.mit.tushar_kaldate.ui.progress.ProgressFragment"
+        android:label="@string/title_progress"
+        tools:layout="@layout/fragment_progress" />
+
+    <!-- Top App Bar & Feature Destinations -->
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.mit.tushar_kaldate.ui.search.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search" />
+
+    <fragment
+        android:id="@+id/navigation_history"
+        android:name="com.mit.tushar_kaldate.ui.history.HistoryFragment"
+        android:label="@string/title_history"
+        tools:layout="@layout/fragment_history" />
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.mit.tushar_kaldate.ui.settings.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settings_to_models"
+            app:destination="@id/navigation_models" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_explain"
+        android:name="com.mit.tushar_kaldate.ui.explain.ExplainFragment"
+        android:label="@string/title_explain"
+        tools:layout="@layout/fragment_explain" />
+
+    <fragment
+        android:id="@+id/navigation_debug"
+        android:name="com.mit.tushar_kaldate.ui.debug.DebugFragment"
+        android:label="@string/title_debug"
+        tools:layout="@layout/fragment_debug" />
+
+    <fragment
+        android:id="@+id/navigation_models"
+        android:name="com.mit.tushar_kaldate.ui.models.ModelManagerFragment"
+        android:label="@string/title_models"
+        tools:layout="@layout/fragment_model_manager" />
+
+    <fragment
+        android:id="@+id/navigation_login"
+        android:name="com.mit.tushar_kaldate.ui.auth.LoginFragment"
+        android:label="@string/title_login"
+        tools:layout="@layout/fragment_login" />
+
+    <fragment
+        android:id="@+id/navigation_register"
+        android:name="com.mit.tushar_kaldate.ui.auth.RegisterFragment"
+        android:label="@string/title_register"
+        tools:layout="@layout/fragment_register" />
+
+</navigation>

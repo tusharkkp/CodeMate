@@ -1,22 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#1E88E5</color>
-    <color name="on_primary">#FFFFFF</color>
-    <color name="primary_container">#D1E4FF</color>
-    <color name="on_primary_container">#001D36</color>
+    <!-- Brand / Primary -->
+    <color name="md_theme_light_primary">#1D61D2</color>
+    <color name="md_theme_light_onPrimary">#FFFFFF</color>
+    <color name="md_theme_light_primaryContainer">#D9E2FF</color>
+    <color name="md_theme_light_onPrimaryContainer">#001944</color>
 
-    <color name="secondary">#00897B</color>
-    <color name="on_secondary">#FFFFFF</color>
-    <color name="secondary_container">#A7F0E4</color>
-    <color name="on_secondary_container">#00201B</color>
+    <!-- Secondary (Teal) -->
+    <color name="md_theme_light_secondary">#006A61</color>
+    <color name="md_theme_light_onSecondary">#FFFFFF</color>
+    <color name="md_theme_light_secondaryContainer">#73F8E7</color>
+    <color name="md_theme_light_onSecondaryContainer">#00201C</color>
 
-    <color name="background">#FAFAFA</color>
-    <color name="on_background">#1A1C1E</color>
-    <color name="surface">#FFFFFF</color>
-    <color name="on_surface">#1A1C1E</color>
-    <color name="surface_variant">#E1E2EC</color>
-    <color name="on_surface_variant">#44474F</color>
+    <!-- Tertiary (Purple accent) -->
+    <color name="md_theme_light_tertiary">#6750A4</color>
+    <color name="md_theme_light_onTertiary">#FFFFFF</color>
+    <color name="md_theme_light_tertiaryContainer">#E9DDFF</color>
+    <color name="md_theme_light_onTertiaryContainer">#22005D</color>
 
-    <color name="error">#BA1A1A</color>
-    <color name="on_error">#FFFFFF</color>
-    <color name="outline">#74777F</color>
+    <!-- Surfaces & Backgrounds -->
+    <color name="md_theme_light_error">#BA1A1A</color>
+    <color name="md_theme_light_onError">#FFFFFF</color>
+    <color name="md_theme_light_errorContainer">#FFDAD6</color>
+    <color name="md_theme_light_onErrorContainer">#410002</color>
+    <color name="md_theme_light_background">#FDFBFF</color>
+    <color name="md_theme_light_onBackground">#1A1B1F</color>
+    <color name="md_theme_light_surface">#FDFBFF</color>
+    <color name="md_theme_light_onSurface">#1A1B1F</color>
+    <color name="md_theme_light_surfaceVariant">#E1E2EC</color>
+    <color name="md_theme_light_onSurfaceVariant">#44474F</color>
+    <color name="md_theme_light_outline">#757780</color>
+
+    <!-- Dark Theme Palette -->
+    <color name="md_theme_dark_primary">#AFC6FF</color>
+    <color name="md_theme_dark_onPrimary">#002D6C</color>
+    <color name="md_theme_dark_primaryContainer">#004397</color>
+    <color name="md_theme_dark_onPrimaryContainer">#D9E2FF</color>
+
+    <color name="md_theme_dark_secondary">#53DBCB</color>
+    <color name="md_theme_dark_onSecondary">#003732</color>
+    <color name="md_theme_dark_secondaryContainer">#005049</color>
+    <color name="md_theme_dark_onSecondaryContainer">#73F8E7</color>
+
+    <color name="md_theme_dark_tertiary">#CFBDFF</color>
+    <color name="md_theme_dark_onTertiary">#371E73</color>
+    <color name="md_theme_dark_tertiaryContainer">#4E378A</color>
+    <color name="md_theme_dark_onTertiaryContainer">#E9DDFF</color>
+
+    <color name="md_theme_dark_error">#FFB4AB</color>
+    <color name="md_theme_dark_onError">#690005</color>
+    <color name="md_theme_dark_errorContainer">#93000A</color>
+    <color name="md_theme_dark_onErrorContainer">#FFDAD6</color>
+    <color name="md_theme_dark_background">#111318</color>
+    <color name="md_theme_dark_onBackground">#E2E2E9</color>
+    <color name="md_theme_dark_surface">#111318</color>
+    <color name="md_theme_dark_onSurface">#E2E2E9</color>
+    <color name="md_theme_dark_surfaceVariant">#44474F</color>
+    <color name="md_theme_dark_onSurfaceVariant">#C5C6D0</color>
+    <color name="md_theme_dark_outline">#8E9099</color>
+
+    <!-- Code Block Spec Colors -->
+    <color name="code_background">#1E293B</color>
+    <color name="code_header">#0F172A</color>
+    <color name="code_text">#E2E8F0</color>
+    <color name="code_keyword">#7DD3FC</color>
+    <color name="code_string">#86EFAC</color>
+    <color name="code_comment">#94A3B8</color>
+
+    <!-- Chat Message Bubbles -->
+    <color name="bubble_user_light">#D9E2FF</color>
+    <color name="bubble_user_dark">#004397</color>
+    <color name="bubble_assistant_light">#F2F3FA</color>
+    <color name="bubble_assistant_dark">#1E2025</color>
 </resources>

@@ -30,6 +30,7 @@ if ($Mode -eq "full") {
         Write-Host "!!! no emulator/device (G4-G7 skipped)"
         exit 2
     }
+
     Run "G4 instrumented" { .\gradlew.bat --console=plain connectedDebugAndroidTest }
     & $AdbCmd logcat -c
     & $AdbCmd install -r app\build\outputs\apk\debug\app-debug.apk | Out-Null
