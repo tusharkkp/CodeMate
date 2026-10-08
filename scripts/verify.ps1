@@ -36,7 +36,7 @@ if ($Mode -eq "full") {
     & $AdbCmd shell monkey -p $Pkg -c android.intent.category.LAUNCHER 1 | Out-Null
     Start-Sleep 4
     New-Item -ItemType Directory -Force docs\screens | Out-Null
-    cmd /c "$AdbCmd exec-out screencap -p > docs\screens\smoke-launch.png"
+    cmd /c "`"$AdbCmd`" exec-out screencap -p > docs\screens\smoke-launch.png"
     & $AdbCmd shell monkey -p $Pkg --throttle 150 --pct-syskeys 0 -v 300 | Out-Null
     if ((& $AdbCmd logcat -d) -match "FATAL EXCEPTION|ANR in $Pkg") {
         Write-Host "!!! crash or ANR"

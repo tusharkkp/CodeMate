@@ -11,3 +11,4 @@ Every non-obvious choice (library, version, trade-off) must be recorded here wit
 | 2026-10-08 | Manual `AppContainer` DI (No Hilt) | Avoids annotation processor / KSP DI overhead and compilation complexity during hackathon loops |
 | 2026-10-08 | XML Views + ViewBinding (No Jetpack Compose) | Explicit constraint from spec; guaranteed single-activity ViewBinding stability |
 | 2026-10-08 | CompileSdk 35 / MinSdk 26 | Modern Android API features while supporting devices back to Android 8.0 (API 26) |
+| 2026-10-08 | AndroidJUnitRunner + ExampleInstrumentedTest | Verification of application context and runtime APK installation on Pixel 9 AVD |
