@@ -85,4 +85,29 @@
     <string name="action_cancel">Cancel</string>
     <string name="action_delete">Delete</string>
     <string name="action_logout">Sign Out</string>
+
+    <!-- AI & Engine Errors -->
+    <string name="error_no_network">No internet connection. Please check your network or switch to offline mode.</string>
+    <string name="error_bad_key">Invalid or missing Gemini API key. Please check your configuration.</string>
+    <string name="error_rate_limited">Gemini rate limit reached. Please wait a moment and try again.</string>
+    <string name="error_server">Gemini service temporarily unavailable (%1$d). Please try again shortly.</string>
+    <string name="error_timeout">AI request timed out. Please try again.</string>
+    <string name="error_model_missing">On-device model file not found. Please download it in Model Manager.</string>
+    <string name="error_safety_blocked">Response blocked by AI safety policy (%1$s).</string>
+    <string name="error_unknown">An error occurred: %1$s</string>
+
+    <!-- Chat Screen Strings -->
+    <string name="chat_title_default">New Chat</string>
+    <string name="chat_input_hint">Ask a programming question…</string>
+    <string name="chat_btn_send">Send</string>
+    <string name="chat_btn_stop">Stop</string>
+    <string name="chat_btn_regenerate">Regenerate</string>
+    <string name="chat_engine_badge_cloud">☁ Gemini</string>
+    <string name="chat_engine_badge_local">⚡ On-Device</string>
+    <string name="chat_engine_badge_fake">🧪 Mock</string>
+    <string name="chat_empty_title">Start a Conversation</string>
+    <string name="chat_empty_subtitle">Ask about Java, Python, C++, or algorithm concepts.</string>
+    <string name="chat_language_dialog_title">Select Programming Language</string>
+    <string name="chat_level_dialog_title">Select Learner Level</string>
+    <string name="chat_engine_dialog_title">Select AI Engine</string>
 </resources>

@@ -11,6 +11,7 @@ Format: `YYYY-MM-DD HH:MM | phase N | slice: <what> | gates: G1✔ G2✔ G3✔ |
 2026-10-10 00:05 | phase 2 | slice: Room database, DataStore, security & repositories | gates: G1✔ G2✔ G3✔ | cycles: 2 | note: Room 2.7.0 with 9 entities & DAOs, schema 1.json exported, DataStore preferences, PBKDF2 hashing, 5 repositories wired, 32 unit tests green
 2026-10-10 00:34 | phase 3 | slice: Auth, Settings, Session & Route Guard | gates: G1✔ G2✔ G3✔ | cycles: 2 | note: Login & Register Material 3 screens, AuthValidator, Settings screen with theme/engine/clear data/logout, reactive route guard, 55 unit tests green
 2026-10-10 01:05 | phase 3 | slice: Fix Settings radio button auto-click feedback loop | gates: G1✔ G2✔ G3✔ | cycles: 1 | note: converted RadioGroup listeners to RadioButton onClickListeners to decouple programmatic DataStore state reflection from user gestures; fixed AuthSessionTest overflow navigation
+2026-10-10 01:40 | phase 4 | slice: AI abstraction, Gemini SSE streaming, Chat UI & persistence | gates: G1✔ G2✔ G3✔ | cycles: 2 | note: implemented LlmEngine abstraction, FakeLlmEngine, GeminiCloudEngine with OkHttp SSE, PromptBuilder, ChatAdapter, ChatViewModel with cancellation & Room persistence; 77 unit tests green (0 errors)
 
 
 

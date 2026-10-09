@@ -47,21 +47,54 @@
 
     </HorizontalScrollView>
 
-    <!-- Empty State / Messages Container -->
+    <!-- Error Banner (if any transient error) -->
+    <TextView
+        android:id="@+id/tvChatErrorBanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorErrorContainer"
+        android:paddingHorizontal="@dimen/spacing_m"
+        android:paddingVertical="@dimen/spacing_xs"
+        android:textColor="?attr/colorOnErrorContainer"
+        android:textAppearance="?attr/textAppearanceBodySmall"
+        android:visibility="gone"
+        tools:text="Rate limit reached. Please try again." />
+
+    <!-- Messages Container -->
     <FrameLayout
         android:id="@+id/chatMessagesContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvChatMessages"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingVertical="@dimen/spacing_xs"
+            tools:listitem="@layout/item_chat_message_assistant" />
+
         <com.mit.tushar_kaldate.ui.common.EmptyStateView
             android:id="@+id/chatEmptyState"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <com.mit.tushar_kaldate.ui.common.LoadingStateView
+            android:id="@+id/chatLoadingView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <com.mit.tushar_kaldate.ui.common.ErrorStateView
+            android:id="@+id/chatErrorView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
     </FrameLayout>
 
-    <!-- Input Bar -->
+    <!-- Bottom Input Bar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,17 +110,29 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:hint="Ask a programming question…"
+            android:hint="@string/chat_input_hint"
             android:maxLines="4"
             android:textAppearance="?attr/textAppearanceBodyMedium" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnStopGeneration"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/chat_btn_stop"
+            android:visibility="gone"
+            app:icon="@drawable/ic_stop"
+            app:iconTint="?attr/colorError"
+            tools:visibility="visible" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSendMessage"
             style="@style/Widget.Material3.Button.IconButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:contentDescription="Send message"
-            app:icon="@drawable/ic_chat" />
+            android:contentDescription="@string/chat_btn_send"
+            app:icon="@drawable/ic_send"
+            app:iconTint="?attr/colorPrimary" />
 
     </LinearLayout>
 

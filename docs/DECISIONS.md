@@ -26,6 +26,10 @@ Every non-obvious choice (library, version, trade-off) must be recorded here wit
 | 2026-10-10 | Single-Activity Route Guard via `isLoggedIn` Flow | Replaces blocking route checks with coroutine flow collection to never block the main thread |
 | 2026-10-10 | Reactive Theme Application | Observes DataStore `themeMode` and dynamically calls `AppCompatDelegate.setDefaultNightMode()` |
 | 2026-10-10 | `RadioButton.setOnClickListener` in Settings | Prevents infinite loop where `RadioGroup.setOnCheckedChangeListener` was re-triggered by programmatic DataStore state updates and Activity recreation |
+| 2026-10-10 | REST SSE streaming with OkHttp | Server-Sent Events over OkHttp enables streaming tokens from Gemini v1beta streamGenerateContent without heavy proprietary SDK dependencies |
+| 2026-10-10 | Coroutine-linked OkHttp cancellation | Invoking `call.cancel()` in `channelFlow.invokeOnClose` aborts HTTP socket immediately (<1s) upon user stop generation |
+| 2026-10-10 | Markwon + TablePlugin for Chat Bubbles | Native Markdown formatting and tables in Android TextViews without WebViews |
+| 2026-10-10 | Transient streaming UI model with -1 ID | Smooth token-by-token UI updates while streaming, persisting exactly once to Room upon completion or user cancellation |
 
 
 

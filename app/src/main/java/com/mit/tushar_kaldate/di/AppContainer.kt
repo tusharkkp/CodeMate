@@ -54,4 +54,19 @@ class AppContainer(private val applicationContext: Context) {
     val searchRepository: SearchRepository by lazy {
         SearchRepository(database.messageDao(), database.conversationDao(), curriculumLoader)
     }
+
+    val geminiCloudEngine: com.mit.tushar_kaldate.ai.cloud.GeminiCloudEngine by lazy {
+        com.mit.tushar_kaldate.ai.cloud.GeminiCloudEngine()
+    }
+
+    val fakeLlmEngine: com.mit.tushar_kaldate.ai.engine.FakeLlmEngine by lazy {
+        com.mit.tushar_kaldate.ai.engine.FakeLlmEngine()
+    }
+
+    val engineRouter: com.mit.tushar_kaldate.ai.engine.EngineRouter by lazy {
+        com.mit.tushar_kaldate.ai.engine.EngineRouter(
+            cloudEngine = geminiCloudEngine,
+            localEngine = null
+        )
+    }
 }
