@@ -1,13 +1,13 @@
 # PROJECT STATE
-Updated: 2026-10-10 02:44 IST   Branch: phase/05-on-device-llm   Last commit: Phase 5 On-Device LLM & Model Manager
+Updated: 2026-10-10 03:14 IST   Branch: phase/05-on-device-llm   Last commit: e7a8e8a fix(ai): resolve model download stalls and live progress observation
 Current phase: 5 — On-Device Offline LLM & Model Manager (LiteRT-LM)   Status: pending-human (automated gates G1-G3 green; ready for physical phone verification)
 Done:
 - Tagged `phase-04-done` on phase 4 acceptance
 - Created and switched to branch `phase/05-on-device-llm`
 - Implemented On-Device Hardware Tier Catalog (`ModelCatalog.kt`):
-  * `QUALITY` tier: `gemma-2-2b-it` (~3.0 GB, min 6 GB RAM, Gemma Terms)
-  * `STANDARD` tier: `qwen2.5-1.5b-instruct` (~1.6 GB, min 4 GB RAM, Apache-2.0, ungated)
-  * `LITE` tier: `qwen2.5-0.5b-instruct` (~550 MB, min 3 GB RAM, Apache-2.0, ungated)
+  * `QUALITY` tier: `gemma-2-2b-it` (~2.5 GB, min 6 GB RAM, Gemma Terms, verified live HuggingFace CDN link)
+  * `STANDARD` tier: `qwen2.5-1.5b-instruct` (~557 MB, min 4 GB RAM, Apache-2.0, verified live HuggingFace CDN link)
+  * `LITE` tier: `qwen2.5-0.5b-instruct` / Gemma 270M (~272 MB, min 3 GB RAM, Apache-2.0, verified live HuggingFace CDN link)
 - Implemented Device Capability & Safety Inspector (`DeviceCapabilityChecker.kt`):
   * Dynamic inspection of physical total RAM, available RAM, and free filesystem space
   * Hardware recommendation logic recommending optimal tier for device specs
