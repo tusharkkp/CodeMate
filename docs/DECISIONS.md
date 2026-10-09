@@ -31,6 +31,8 @@ Every non-obvious choice (library, version, trade-off) must be recorded here wit
 | 2026-10-10 | Markwon + TablePlugin for Chat Bubbles | Native Markdown formatting and tables in Android TextViews without WebViews |
 | 2026-10-10 | Transient streaming UI model with -1 ID | Smooth token-by-token UI updates while streaming, persisting exactly once to Room upon completion or user cancellation |
 | 2026-10-10 | Evergreen `gemini-flash-latest` Cloud Model | Replaces deprecated `gemini-2.5-flash` (which returned 404 for new keys) with active, stable `gemini-flash-latest` |
-
-
-
+| 2026-10-10 | 3-Tier Offline LLM Catalog | Standardizes offline models into Quality (Gemma 2 2B), Standard (Qwen 2.5 1.5B), and Lite (Qwen 2.5 0.5B) tiers matching Android device hardware capabilities |
+| 2026-10-10 | WorkManager HTTP Range Downloader | Enables resumable model downloads with background persistence, Wi-Fi constraints, and foreground notifications without bundling models in the APK |
+| 2026-10-10 | `usableSpace` + JVM fallback in `DeviceCapabilityChecker` | Allows robust hardware evaluation on both real Android hardware and host JVM test environments |
+| 2026-10-10 | Application `onTrimMemory` model unloading | Automatically closes and unloads heavy model weights when Android triggers TRIM_MEMORY_RUNNING_CRITICAL to prevent LMK crashes |
+| 2026-10-10 | Dynamic `MaterialColors.getColor` in Adapter | Automatically resolves active Material 3 theme colors across day/night modes in custom RecyclerView holders |

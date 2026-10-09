@@ -63,10 +63,21 @@ class AppContainer(private val applicationContext: Context) {
         com.mit.tushar_kaldate.ai.engine.FakeLlmEngine()
     }
 
+    val modelManager: com.mit.tushar_kaldate.ai.local.ModelManager by lazy {
+        com.mit.tushar_kaldate.ai.local.ModelManager(applicationContext)
+    }
+
+    val liteRtLocalEngine: com.mit.tushar_kaldate.ai.local.LiteRtLocalEngine by lazy {
+        com.mit.tushar_kaldate.ai.local.LiteRtLocalEngine(
+            context = applicationContext,
+            modelManager = modelManager
+        )
+    }
+
     val engineRouter: com.mit.tushar_kaldate.ai.engine.EngineRouter by lazy {
         com.mit.tushar_kaldate.ai.engine.EngineRouter(
             cloudEngine = geminiCloudEngine,
-            localEngine = null
+            localEngine = liteRtLocalEngine
         )
     }
 }

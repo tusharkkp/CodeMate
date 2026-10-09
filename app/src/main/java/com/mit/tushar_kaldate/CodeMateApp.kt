@@ -15,4 +15,9 @@ class CodeMateApp : Application() {
         super.onCreate()
         appContainer = AppContainer(this)
     }
+
+    override fun onTrimMemory(level: Int) {
+        super.onTrimMemory(level)
+        appContainer.liteRtLocalEngine.onTrimMemory(level)
+    }
 }

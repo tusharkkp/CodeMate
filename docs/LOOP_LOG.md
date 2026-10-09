@@ -12,8 +12,4 @@ Format: `YYYY-MM-DD HH:MM | phase N | slice: <what> | gates: G1✔ G2✔ G3✔ |
 2026-10-10 00:34 | phase 3 | slice: Auth, Settings, Session & Route Guard | gates: G1✔ G2✔ G3✔ | cycles: 2 | note: Login & Register Material 3 screens, AuthValidator, Settings screen with theme/engine/clear data/logout, reactive route guard, 55 unit tests green
 2026-10-10 01:05 | phase 3 | slice: Fix Settings radio button auto-click feedback loop | gates: G1✔ G2✔ G3✔ | cycles: 1 | note: converted RadioGroup listeners to RadioButton onClickListeners to decouple programmatic DataStore state reflection from user gestures; fixed AuthSessionTest overflow navigation
 2026-10-10 01:40 | phase 4 | slice: AI abstraction, Gemini SSE streaming, Chat UI & persistence | gates: G1✔ G2✔ G3✔ | cycles: 2 | note: implemented LlmEngine abstraction, FakeLlmEngine, GeminiCloudEngine with OkHttp SSE, PromptBuilder, ChatAdapter, ChatViewModel with cancellation & Room persistence; 77 unit tests green (0 errors)
-
-
-
-
-
+2026-10-10 02:44 | phase 5 | slice: On-Device LLM, ModelCatalog, ModelManager & Downloader | gates: G1✔ G2✔ G3✔ | cycles: 2 | note: 3-tier ModelCatalog, DeviceCapabilityChecker, ModelManager with SAF import/delete, ModelDownloadWorker with WorkManager Range HTTP, LiteRtLocalEngine with token streaming & onTrimMemory release, ModelManagerFragment UI; 112 unit tests green (0 errors)

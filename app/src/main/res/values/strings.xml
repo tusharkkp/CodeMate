@@ -110,4 +110,30 @@
     <string name="chat_language_dialog_title">Select Programming Language</string>
     <string name="chat_level_dialog_title">Select Learner Level</string>
     <string name="chat_engine_dialog_title">Select AI Engine</string>
+
+    <!-- Model Manager Strings -->
+    <string name="models_title">Offline Model Manager</string>
+    <string name="models_ram_detected">RAM: %1$.1f GB total</string>
+    <string name="models_storage_free">Storage: %1$.1f GB free</string>
+    <string name="models_recommended_badge">Recommended</string>
+    <string name="models_btn_download">Download</string>
+    <string name="models_btn_pause">Pause</string>
+    <string name="models_btn_resume">Resume</string>
+    <string name="models_btn_cancel">Cancel</string>
+    <string name="models_btn_delete">Delete</string>
+    <string name="models_btn_import">Import File</string>
+    <string name="models_btn_test">Test Model</string>
+    <string name="models_status_not_downloaded">Not downloaded</string>
+    <string name="models_status_downloading">Downloading: %1$d%%</string>
+    <string name="models_status_installed">Installed &amp; Ready</string>
+    <string name="models_delete_confirm_title">Delete Model?</string>
+    <string name="models_delete_confirm_message">Are you sure you want to delete %1$s? You can re-download it anytime.</string>
+    <string name="models_test_dialog_title">Test On-Device Model</string>
+    <string name="models_test_running">Running on-device inference…</string>
+    <string name="models_test_success">Test successful! Latency: %1$d ms</string>
+    <string name="models_test_failed">Test failed: %1$s</string>
+    <string name="models_import_success">Model imported successfully</string>
+    <string name="models_import_failed">Failed to import model: %1$s</string>
+    <string name="models_wifi_only_label">Download over Wi-Fi only</string>
+    <string name="models_specs_format">Size: %1$s • Min RAM: %2$s • License: %3$s</string>
 </resources>
