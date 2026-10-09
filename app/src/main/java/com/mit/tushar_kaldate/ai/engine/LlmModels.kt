@@ -76,6 +76,17 @@ sealed class LlmError(open val rawMessage: String) {
         is SafetyBlocked -> R.string.error_safety_blocked
         is Unknown -> R.string.error_unknown
     }
+
+    fun toUiText(): com.mit.tushar_kaldate.core.ui.UiText = when (this) {
+        is NoNetwork -> com.mit.tushar_kaldate.core.ui.UiText.StringResource(R.string.error_no_network)
+        is BadKey -> com.mit.tushar_kaldate.core.ui.UiText.StringResource(R.string.error_bad_key)
+        is RateLimited -> com.mit.tushar_kaldate.core.ui.UiText.StringResource(R.string.error_rate_limited)
+        is Server -> com.mit.tushar_kaldate.core.ui.UiText.StringResource(R.string.error_server, code)
+        is Timeout -> com.mit.tushar_kaldate.core.ui.UiText.StringResource(R.string.error_timeout)
+        is ModelMissing -> com.mit.tushar_kaldate.core.ui.UiText.StringResource(R.string.error_model_missing)
+        is SafetyBlocked -> com.mit.tushar_kaldate.core.ui.UiText.StringResource(R.string.error_safety_blocked, reason)
+        is Unknown -> com.mit.tushar_kaldate.core.ui.UiText.StringResource(R.string.error_unknown, rawMessage)
+    }
 }
 
 sealed class EngineStatus {

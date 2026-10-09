@@ -201,7 +201,7 @@ class ChatViewModel(
                             _uiState.update {
                                 it.copy(
                                     isStreaming = false,
-                                    errorMessage = UiText.StringResource(chunk.error.getStringResId())
+                                    errorMessage = chunk.error.toUiText()
                                 )
                             }
                         }

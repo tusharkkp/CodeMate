@@ -30,6 +30,7 @@ Every non-obvious choice (library, version, trade-off) must be recorded here wit
 | 2026-10-10 | Coroutine-linked OkHttp cancellation | Invoking `call.cancel()` in `channelFlow.invokeOnClose` aborts HTTP socket immediately (<1s) upon user stop generation |
 | 2026-10-10 | Markwon + TablePlugin for Chat Bubbles | Native Markdown formatting and tables in Android TextViews without WebViews |
 | 2026-10-10 | Transient streaming UI model with -1 ID | Smooth token-by-token UI updates while streaming, persisting exactly once to Room upon completion or user cancellation |
+| 2026-10-10 | Evergreen `gemini-flash-latest` Cloud Model | Replaces deprecated `gemini-2.5-flash` (which returned 404 for new keys) with active, stable `gemini-flash-latest` |
 
 
 

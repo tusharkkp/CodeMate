@@ -5,8 +5,8 @@ package com.mit.tushar_kaldate.ai.config
  * timeouts, and token/history limits.
  */
 object AiConfig {
-    /** Recommended low-latency Google Gemini cloud model */
-    const val DEFAULT_CLOUD_MODEL = "gemini-2.5-flash"
+    /** Recommended low-latency Google Gemini cloud model (evergreen alias pointing to active stable Flash model) */
+    const val DEFAULT_CLOUD_MODEL = "gemini-flash-latest"
 
     /** Gemini v1beta REST base endpoint */
     const val GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta"

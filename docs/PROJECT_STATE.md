@@ -64,5 +64,5 @@ Key versions:
 - Room: 2.7.0
 - Navigation: 2.8.5
 - Material: 1.12.0
-- Gemini Model ID: gemini-2.5-flash
+- Gemini Model ID: gemini-flash-latest (active evergreen alias)
 - LiteRT-LM: to be configured in Phase 5

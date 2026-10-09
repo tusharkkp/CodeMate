@@ -77,6 +77,9 @@ class FakeLlmEngineTest {
         assertEquals(R.string.error_model_missing, LlmError.ModelMissing().getStringResId())
         assertEquals(R.string.error_safety_blocked, LlmError.SafetyBlocked("HARASSMENT").getStringResId())
         assertEquals(R.string.error_unknown, LlmError.Unknown().getStringResId())
+
+        assertTrue(LlmError.Server(500, "Error").toUiText() is com.mit.tushar_kaldate.core.ui.UiText.StringResource)
+        assertTrue(LlmError.NoNetwork().toUiText() is com.mit.tushar_kaldate.core.ui.UiText.StringResource)
     }
 
     @Test

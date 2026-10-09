@@ -97,7 +97,7 @@ class GeminiCloudEngineTest {
 
         val recordedRequest = mockWebServer.takeRequest()
         assertEquals("POST", recordedRequest.method)
-        assertTrue(recordedRequest.path?.contains("/v1beta/models/gemini-2.5-flash:streamGenerateContent") == true)
+        assertTrue(recordedRequest.path?.contains("/v1beta/models/gemini-flash-latest:streamGenerateContent") == true)
         assertTrue(recordedRequest.path?.contains("alt=sse") == true)
         assertTrue(recordedRequest.path?.contains("key=test-api-key") == true)
     }
