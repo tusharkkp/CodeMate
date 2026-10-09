@@ -99,4 +99,9 @@ class ChatRepository(
         }
         return messageId
     }
+
+    suspend fun clearAllConversationsForUser(userId: Long): Int {
+        return conversationDao.deleteAllForUser(userId)
+    }
 }
+

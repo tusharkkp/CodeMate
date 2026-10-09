@@ -10,14 +10,14 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class AuthRepository(
+open class AuthRepository(
     private val userDao: UserDao,
     private val sessionStore: SessionStore
 ) {
 
-    val isLoggedIn: Flow<Boolean> = sessionStore.isLoggedIn
+    open val isLoggedIn: Flow<Boolean> = sessionStore.isLoggedIn
 
-    val currentUser: Flow<UserEntity?> = sessionStore.userId.flatMapLatest { userId ->
+    open val currentUser: Flow<UserEntity?> = sessionStore.userId.flatMapLatest { userId ->
         if (userId != null) {
             userDao.observeUserById(userId)
         } else {
@@ -25,7 +25,7 @@ class AuthRepository(
         }
     }
 
-    suspend fun register(name: String, email: String, password: String): Result<UserEntity> {
+    open suspend fun register(name: String, email: String, password: String): Result<UserEntity> {
         val trimmedEmail = email.trim().lowercase()
         val trimmedName = name.trim()
 
@@ -60,7 +60,7 @@ class AuthRepository(
         return Result.success(createdUser)
     }
 
-    suspend fun login(email: String, password: String): Result<UserEntity> {
+    open suspend fun login(email: String, password: String): Result<UserEntity> {
         val trimmedEmail = email.trim().lowercase()
         val user = userDao.getUserByEmail(trimmedEmail)
             ?: return Result.failure(IllegalArgumentException("User not found with this email"))
@@ -79,7 +79,7 @@ class AuthRepository(
         return Result.success(user)
     }
 
-    suspend fun loginAsGuest(): Result<UserEntity> {
+    open suspend fun loginAsGuest(): Result<UserEntity> {
         val guestEmail = "guest_${System.currentTimeMillis()}@codemate.local"
         val user = UserEntity(
             name = "Guest Learner",
@@ -94,7 +94,7 @@ class AuthRepository(
         return Result.success(guestUser)
     }
 
-    suspend fun logout() {
+    open suspend fun logout() {
         sessionStore.clearSession()
     }
 }

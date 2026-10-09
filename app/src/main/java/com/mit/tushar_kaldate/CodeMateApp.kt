@@ -8,6 +8,9 @@ class CodeMateApp : Application() {
     lateinit var appContainer: AppContainer
         private set
 
+    val container: AppContainer
+        get() = appContainer
+
     override fun onCreate() {
         super.onCreate()
         appContainer = AppContainer(this)

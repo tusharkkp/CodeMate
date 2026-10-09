@@ -21,4 +21,9 @@ Every non-obvious choice (library, version, trade-off) must be recorded here wit
 | 2026-10-09 | `PasswordHasher` uses `java.util.Base64` | Enables standard JVM unit test execution without mocking `android.util.Base64` |
 | 2026-10-09 | Physical-Device-First Verification | Mitigates host CPU overheating by eliminating default emulator execution and using physical phone checklists |
 | 2026-10-09 | Escaped path in `gradle.properties` | `C\:/...` required by Android Lint `PropertyEscape` check while binding Gradle daemon to JDK 21 |
+| 2026-10-10 | Pure Kotlin Regex in `AuthValidator` | Replaces `android.util.Patterns` to allow pure JVM unit testing without framework mocks |
+| 2026-10-10 | Open `AuthRepository` + `FakeAuthRepository` in tests | Avoids MockK reflection `ClassCastException` with Kotlin inline value class `Result` in coroutines |
+| 2026-10-10 | Single-Activity Route Guard via `isLoggedIn` Flow | Replaces blocking route checks with coroutine flow collection to never block the main thread |
+| 2026-10-10 | Reactive Theme Application | Observes DataStore `themeMode` and dynamically calls `AppCompatDelegate.setDefaultNightMode()` |
+
 
