@@ -18,6 +18,15 @@ Rule of thumb: *no green gate = not done.*
 
 `fast` = G1–G3. `full` = G1–G7 (+G8 in Phase 11).
 
+### Physical-Device-First Verification Workflow (Active)
+Due to host thermal/CPU constraints running Android Studio alongside the emulator, all phases adhere to a physical-device-first manual verification pattern:
+1. **No Emulator:** The Android emulator is never started or required by default.
+2. **Automated Gates (G1, G2, G3):** Run individually via Gradle (`assembleDebug`, `lintDebug`, `testDebugUnitTest`).
+3. **USB Physical Device Tests (G4):** Run `connectedDebugAndroidTest` on a connected physical device when available; never start an emulator.
+4. **Manual Verification Checklist (G5, G7):** For each phase, provide the built debug APK (`app/build/outputs/apk/debug/app-debug.apk`), adb install instructions, and a tailored step-by-step checklist with pass/fail criteria and screenshot requirements.
+5. **Monkey Stress Tests (G6):** NOT RUN on personal physical devices without explicit user approval.
+6. **Reporting:** Clearly distinguish automated tests (G1-G3), physical device tests/manual verification, and items pending human review. A phase remains pending-human until the human provides feedback and explicitly accepts the phase.
+
 ## 2. Scripts (create in Phase 0; the agent must keep them working)
 
 ### `scripts/verify.sh` (macOS/Linux/Git-Bash)

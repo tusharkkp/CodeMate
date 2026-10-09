@@ -17,4 +17,8 @@ Every non-obvious choice (library, version, trade-off) must be recorded here wit
 | 2026-10-08 | Reusable Common Views (Loading, Empty, Error, CodeBlock) | Provides standardized UI feedback states across all screens with clipboard copying |
 | 2026-10-08 | ViewCompat WindowInsetsCompat on MainActivity topAppBar | Fixes Android 15 edge-to-edge overlap with status bar in toolbar |
 | 2026-10-08 | animationsDisabled = true in testOptions | Disables window and transition animations during connected Android tests for Espresso stability |
+| 2026-10-09 | Room 2.7.0 update | Resolves KSP 2.3.6 JVM signature bug with Void/Unit return types present in Room 2.6.1 |
+| 2026-10-09 | `PasswordHasher` uses `java.util.Base64` | Enables standard JVM unit test execution without mocking `android.util.Base64` |
+| 2026-10-09 | Physical-Device-First Verification | Mitigates host CPU overheating by eliminating default emulator execution and using physical phone checklists |
+| 2026-10-09 | Escaped path in `gradle.properties` | `C\:/...` required by Android Lint `PropertyEscape` check while binding Gradle daemon to JDK 21 |
 

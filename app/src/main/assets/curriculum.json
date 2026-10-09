@@ -1,0 +1,120 @@
+{
+  "languages": [
+    {
+      "id": "python",
+      "name": "Python",
+      "topics": [
+        {
+          "id": "python-variables",
+          "title": "Variables & Data Types",
+          "description": "Dynamic typing, integers, floats, strings, and booleans in Python.",
+          "difficulty": "EASY",
+          "concepts": ["int", "float", "str", "bool", "type casting", "dynamic typing"]
+        },
+        {
+          "id": "python-control-flow",
+          "title": "Control Flow & Conditionals",
+          "description": "Branching logic with if, elif, else, and logical operators.",
+          "difficulty": "EASY",
+          "concepts": ["if statement", "elif", "else", "boolean operators", "comparison"]
+        },
+        {
+          "id": "python-loops",
+          "title": "Loops & Iterations",
+          "description": "Repeating tasks with for loops, while loops, range(), and break/continue.",
+          "difficulty": "EASY",
+          "concepts": ["for loop", "while loop", "range()", "break", "continue", "enumerate"]
+        },
+        {
+          "id": "python-functions",
+          "title": "Functions & Scope",
+          "description": "Defining reusable functions, parameters, return values, and lambda functions.",
+          "difficulty": "MEDIUM",
+          "concepts": ["def", "parameters", "return", "default arguments", "scope", "lambda"]
+        },
+        {
+          "id": "python-lists-dicts",
+          "title": "Lists, Tuples & Dictionaries",
+          "description": "Working with collections, list comprehensions, and key-value dictionaries.",
+          "difficulty": "MEDIUM",
+          "concepts": ["lists", "tuples", "dicts", "sets", "comprehensions", "indexing"]
+        },
+        {
+          "id": "python-oop",
+          "title": "Object-Oriented Programming",
+          "description": "Classes, objects, __init__, self, inheritance, and encapsulation.",
+          "difficulty": "HARD",
+          "concepts": ["class", "__init__", "inheritance", "polymorphism", "encapsulation"]
+        }
+      ]
+    },
+    {
+      "id": "java",
+      "name": "Java",
+      "topics": [
+        {
+          "id": "java-syntax-types",
+          "title": "Syntax & Primitive Types",
+          "description": "Static typing, primitives (int, double, char, boolean), and String class.",
+          "difficulty": "EASY",
+          "concepts": ["primitive types", "String", "variables", "type casting"]
+        },
+        {
+          "id": "java-control-flow",
+          "title": "Conditionals & Switch",
+          "description": "Decision making with if-else and switch-case statements.",
+          "difficulty": "EASY",
+          "concepts": ["if-else", "switch", "case", "ternary operator"]
+        },
+        {
+          "id": "java-loops",
+          "title": "Loops & Arrays",
+          "description": "Iterating over arrays with for, while, do-while, and enhanced for-each.",
+          "difficulty": "EASY",
+          "concepts": ["for", "while", "do-while", "for-each", "arrays"]
+        },
+        {
+          "id": "java-methods",
+          "title": "Methods & Overloading",
+          "description": "Method signatures, static vs instance methods, and method overloading.",
+          "difficulty": "MEDIUM",
+          "concepts": ["methods", "parameters", "return types", "overloading", "static"]
+        },
+        {
+          "id": "java-oop",
+          "title": "OOP: Classes & Inheritance",
+          "description": "Constructors, access modifiers, inheritance (extends), and interfaces (implements).",
+          "difficulty": "HARD",
+          "concepts": ["class", "extends", "implements", "polymorphism", "encapsulation", "abstract"]
+        }
+      ]
+    },
+    {
+      "id": "cpp",
+      "name": "C++",
+      "topics": [
+        {
+          "id": "cpp-basics",
+          "title": "Basics & I/O",
+          "description": "Standard I/O (cin/cout), data types, namespaces, and operators.",
+          "difficulty": "EASY",
+          "concepts": ["cin", "cout", "namespace", "primitives"]
+        },
+        {
+          "id": "cpp-pointers",
+          "title": "Pointers & References",
+          "description": "Memory addresses, pointer arithmetic, dereferencing, and references.",
+          "difficulty": "HARD",
+          "concepts": ["pointers", "references", "addresses", "dereference", "nullptr"]
+        },
+        {
+          "id": "cpp-stl",
+          "title": "STL Containers",
+          "description": "Standard Template Library: vector, map, set, pair, and iterators.",
+          "difficulty": "MEDIUM",
+          "concepts": ["std::vector", "std::map", "std::set", "iterators", "algorithms"]
+        }
+      ]
+    }
+  ]
+}
