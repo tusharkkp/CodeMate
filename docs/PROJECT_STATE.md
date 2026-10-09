@@ -1,5 +1,5 @@
 # PROJECT STATE
-Updated: 2026-10-10 00:34 IST   Branch: phase/03-auth-settings-sync   Last commit: WIP (ready for commit)
+Updated: 2026-10-10 00:34 IST   Branch: phase/03-auth-settings-sync   Last commit: e3ec98b feat(auth): implement Login, Register, Settings, Session route guard, and unit tests
 Current phase: 3 — Login (local-first), Settings, Session & Sync   Status: pending-human (automated gates G1-G3 green; ready for physical phone verification)
 Done:
 - Tagged `phase-02-done` on phase 2 acceptance
