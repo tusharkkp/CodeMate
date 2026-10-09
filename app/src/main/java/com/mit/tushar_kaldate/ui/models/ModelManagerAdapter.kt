@@ -56,9 +56,15 @@ class ModelManagerAdapter(
                 item.isDownloading -> {
                     binding.layoutDownloadProgress.isVisible = true
                     binding.progressDownload.progress = item.downloadProgress
+
+                    val detail = if (item.totalBytes > 0L && item.downloadedBytes > 0L) {
+                        "${item.downloadProgress}% (${formatBytes(item.downloadedBytes)} / ${formatBytes(item.totalBytes)})"
+                    } else {
+                        "${item.downloadProgress}%"
+                    }
                     binding.tvDownloadProgressText.text = context.getString(
-                        R.string.models_status_downloading,
-                        item.downloadProgress
+                        R.string.models_status_downloading_detail,
+                        detail
                     )
 
                     binding.btnDownload.isVisible = false
@@ -72,8 +78,8 @@ class ModelManagerAdapter(
                     )
                     binding.ivStatusIcon.setColorFilter(primaryColor)
                     binding.tvStatusText.text = context.getString(
-                        R.string.models_status_downloading,
-                        item.downloadProgress
+                        R.string.models_status_downloading_detail,
+                        detail
                     )
                 }
                 item.isInstalled -> {

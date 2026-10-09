@@ -46,6 +46,8 @@ class ModelDownloadWorker(
 
     private val modelManager = ModelManager(applicationContext)
     private val client = OkHttpClient.Builder()
+        .followRedirects(true)
+        .followSslRedirects(true)
         .connectTimeout(30, TimeUnit.SECONDS)
         .readTimeout(60, TimeUnit.SECONDS)
         .build()
@@ -75,6 +77,15 @@ class ModelDownloadWorker(
         createNotificationChannel()
 
         try {
+            // Immediately report initial progress
+            setProgress(
+                workDataOf(
+                    KEY_PROGRESS to 0,
+                    KEY_BYTES_DOWNLOADED to existingBytes,
+                    KEY_TOTAL_BYTES to expectedSize
+                )
+            )
+
             // Set initial foreground progress notification
             try {
                 setForeground(createForegroundInfo(0, filename))
@@ -109,6 +120,7 @@ class ModelDownloadWorker(
                 var bytesRead: Int
                 var currentDownloaded = existingBytes
                 var lastProgress = 0
+                var lastUpdateTime = System.currentTimeMillis()
 
                 while (inputStream.read(buffer).also { bytesRead = it } != -1) {
                     if (isStopped) {
@@ -124,8 +136,10 @@ class ModelDownloadWorker(
                         0
                     }
 
-                    if (progress != lastProgress) {
+                    val now = System.currentTimeMillis()
+                    if (progress != lastProgress || (now - lastUpdateTime >= 300)) {
                         lastProgress = progress
+                        lastUpdateTime = now
                         setProgress(
                             workDataOf(
                                 KEY_PROGRESS to progress,

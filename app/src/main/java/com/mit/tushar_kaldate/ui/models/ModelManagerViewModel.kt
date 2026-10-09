@@ -38,6 +38,8 @@ data class CatalogItemUiState(
     val isRecommended: Boolean,
     val isDownloading: Boolean = false,
     val downloadProgress: Int = 0,
+    val downloadedBytes: Long = 0L,
+    val totalBytes: Long = 0L,
     val localFile: File? = null
 )
 
@@ -130,7 +132,13 @@ class ModelManagerViewModel(
             downloadWork
         )
 
-        updateModelDownloading(tierInfo.id, isDownloading = true, progress = 0)
+        updateModelDownloading(
+            tierInfo.id,
+            isDownloading = true,
+            progress = 0,
+            downloadedBytes = 0L,
+            totalBytes = tierInfo.sizeBytes
+        )
     }
 
     fun cancelDownload(tierInfo: ModelTierInfo) {
@@ -192,15 +200,31 @@ class ModelManagerViewModel(
     }
 
     private fun observeWorkManagerDownloads() {
-        viewModelScope.launch {
-            ModelCatalog.allModels.forEach { model ->
+        ModelCatalog.allModels.forEach { model ->
+            viewModelScope.launch {
                 workManager.getWorkInfosForUniqueWorkFlow("model_download_${model.id}")
                     .collect { workInfos ->
                         val info = workInfos.firstOrNull() ?: return@collect
                         when (info.state) {
+                            WorkInfo.State.ENQUEUED -> {
+                                updateModelDownloading(
+                                    model.id,
+                                    isDownloading = true,
+                                    progress = 0,
+                                    totalBytes = model.sizeBytes
+                                )
+                            }
                             WorkInfo.State.RUNNING -> {
                                 val progress = info.progress.getInt(ModelDownloadWorker.KEY_PROGRESS, 0)
-                                updateModelDownloading(model.id, isDownloading = true, progress = progress)
+                                val downloaded = info.progress.getLong(ModelDownloadWorker.KEY_BYTES_DOWNLOADED, 0L)
+                                val total = info.progress.getLong(ModelDownloadWorker.KEY_TOTAL_BYTES, model.sizeBytes)
+                                updateModelDownloading(
+                                    model.id,
+                                    isDownloading = true,
+                                    progress = progress,
+                                    downloadedBytes = downloaded,
+                                    totalBytes = total
+                                )
                             }
                             WorkInfo.State.SUCCEEDED -> {
                                 updateModelDownloading(model.id, isDownloading = false, progress = 100)
@@ -222,11 +246,22 @@ class ModelManagerViewModel(
         }
     }
 
-    private fun updateModelDownloading(modelId: String, isDownloading: Boolean, progress: Int) {
+    private fun updateModelDownloading(
+        modelId: String,
+        isDownloading: Boolean,
+        progress: Int,
+        downloadedBytes: Long = 0L,
+        totalBytes: Long = 0L
+    ) {
         _uiState.update { state ->
             val updatedList = state.models.map { item ->
                 if (item.tierInfo.id == modelId) {
-                    item.copy(isDownloading = isDownloading, downloadProgress = progress)
+                    item.copy(
+                        isDownloading = isDownloading,
+                        downloadProgress = progress,
+                        downloadedBytes = downloadedBytes,
+                        totalBytes = totalBytes
+                    )
                 } else {
                     item
                 }

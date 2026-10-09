@@ -75,8 +75,8 @@ class ModelManagerFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        binding.switchWifiOnly.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.setWifiOnly(isChecked)
+        binding.switchWifiOnly.setOnClickListener {
+            viewModel.setWifiOnly(binding.switchWifiOnly.isChecked)
         }
 
         binding.btnImportModel.setOnClickListener {
@@ -121,7 +121,9 @@ class ModelManagerFragment : Fragment() {
             binding.tvHardwareWarning.text = cap.warningMessage.orEmpty()
         }
 
-        binding.switchWifiOnly.isChecked = state.wifiOnly
+        if (binding.switchWifiOnly.isChecked != state.wifiOnly) {
+            binding.switchWifiOnly.isChecked = state.wifiOnly
+        }
 
         // Active model and test card
         if (state.activeModel != null) {

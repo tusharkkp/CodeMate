@@ -136,4 +136,5 @@
     <string name="models_import_failed">Failed to import model: %1$s</string>
     <string name="models_wifi_only_label">Download over Wi-Fi only</string>
     <string name="models_specs_format">Size: %1$s • Min RAM: %2$s • License: %3$s</string>
+    <string name="models_status_downloading_detail">Downloading: %1$s</string>
 </resources>
