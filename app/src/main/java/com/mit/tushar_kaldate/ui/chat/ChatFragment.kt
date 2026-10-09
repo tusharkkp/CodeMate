@@ -106,6 +106,11 @@ class ChatFragment : Fragment() {
         binding.chipEngine.setOnClickListener {
             showEngineDialog()
         }
+
+        binding.chipNewChat.setOnClickListener {
+            viewModel.startNewConversation()
+            Toast.makeText(requireContext(), R.string.chat_title_default, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setupEmptyState() {

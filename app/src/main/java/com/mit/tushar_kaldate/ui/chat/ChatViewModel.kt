@@ -56,33 +56,63 @@ class ChatViewModel(
 
     fun initConversation(conversationId: Long? = null) {
         if (conversationId != null) {
-            viewModelScope.launch {
-                val conv = chatRepository.getConversation(conversationId)
-                if (conv != null) {
-                    _uiState.update {
-                        it.copy(
-                            conversationId = conv.id,
-                            title = conv.title,
-                            selectedLanguage = conv.language,
-                            selectedLevel = conv.level,
-                            selectedEngine = conv.engine,
-                            mode = conv.mode
-                        )
-                    }
-                    observeMessagesFor(conv.id)
-                }
+            if (_uiState.value.conversationId != conversationId) {
+                loadConversation(conversationId)
+            } else if (messagesJob?.isActive != true) {
+                observeMessagesFor(conversationId)
             }
         } else {
-            messagesJob?.cancel()
-            lastPersistedEntities = emptyList()
-            _uiState.update {
-                it.copy(
-                    conversationId = null,
-                    title = "New Chat",
-                    messages = emptyList(),
-                    isEmpty = true
-                )
+            val currentId = _uiState.value.conversationId
+            if (currentId != null) {
+                // Retain current in-memory conversation across tab switches
+                if (messagesJob?.isActive != true) {
+                    observeMessagesFor(currentId)
+                }
+            } else {
+                // If not currently loaded, restore the user's latest conversation from Room if available
+                viewModelScope.launch {
+                    val userId = sessionStore.userId.first() ?: 0L
+                    val convs = chatRepository.observeConversations(userId).first()
+                    val latest = convs.firstOrNull()
+                    if (latest != null) {
+                        loadConversation(latest.id)
+                    } else {
+                        startNewConversation()
+                    }
+                }
             }
+        }
+    }
+
+    fun loadConversation(conversationId: Long) {
+        viewModelScope.launch {
+            val conv = chatRepository.getConversation(conversationId)
+            if (conv != null) {
+                _uiState.update {
+                    it.copy(
+                        conversationId = conv.id,
+                        title = conv.title,
+                        selectedLanguage = conv.language,
+                        selectedLevel = conv.level,
+                        selectedEngine = conv.engine,
+                        mode = conv.mode
+                    )
+                }
+                observeMessagesFor(conv.id)
+            }
+        }
+    }
+
+    fun startNewConversation() {
+        messagesJob?.cancel()
+        lastPersistedEntities = emptyList()
+        _uiState.update {
+            it.copy(
+                conversationId = null,
+                title = "New Chat",
+                messages = emptyList(),
+                isEmpty = true
+            )
         }
     }
 

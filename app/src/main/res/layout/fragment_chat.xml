@@ -43,6 +43,13 @@
                 android:text="☁ Cloud"
                 app:chipIcon="@drawable/ic_chat" />
 
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipNewChat"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+ New Chat" />
+
         </com.google.android.material.chip.ChipGroup>
 
     </HorizontalScrollView>

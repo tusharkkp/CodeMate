@@ -48,6 +48,7 @@ class ChatViewModelTest {
     private lateinit var viewModel: ChatViewModel
 
     private val messagesFlow = MutableStateFlow<List<MessageEntity>>(emptyList())
+    private val conversationsFlow = MutableStateFlow<List<ConversationEntity>>(emptyList())
     private val defaultEngineFlow = MutableStateFlow(EngineType.CLOUD)
     private val userIdFlow = MutableStateFlow<Long?>(1L)
 
@@ -58,6 +59,7 @@ class ChatViewModelTest {
         every { settingsStore.defaultEngine } returns defaultEngineFlow
         every { sessionStore.userId } returns userIdFlow
         every { chatRepository.observeMessages(any()) } returns messagesFlow
+        every { chatRepository.observeConversations(any()) } returns conversationsFlow
 
         engineRouter = EngineRouter(cloudEngine = fakeLlmEngine)
         viewModel = ChatViewModel(chatRepository, engineRouter, sessionStore, settingsStore)
@@ -202,5 +204,79 @@ class ChatViewModelTest {
 
         viewModel.setEngine(EngineType.LOCAL)
         assertEquals(EngineType.LOCAL, viewModel.uiState.value.selectedEngine)
+    }
+
+    @Test
+    fun `initConversation with null restores latest conversation when available`() = runTest {
+        val conv = ConversationEntity(
+            id = 99L,
+            userId = 1L,
+            title = "Existing Chat",
+            mode = TutorMode.CHAT,
+            language = "Java",
+            level = LearnerLevel.ADVANCED,
+            engine = EngineType.CLOUD
+        )
+        conversationsFlow.value = listOf(conv)
+        coEvery { chatRepository.getConversation(99L) } returns conv
+
+        viewModel.initConversation(null)
+        advanceUntilIdle()
+
+        assertEquals(99L, viewModel.uiState.value.conversationId)
+        assertEquals("Existing Chat", viewModel.uiState.value.title)
+        assertEquals("Java", viewModel.uiState.value.selectedLanguage)
+        assertEquals(LearnerLevel.ADVANCED, viewModel.uiState.value.selectedLevel)
+    }
+
+    @Test
+    fun `initConversation retains active conversation without wiping when returning from tab switch`() = runTest {
+        val conv = ConversationEntity(
+            id = 55L,
+            userId = 1L,
+            title = "Active Chat",
+            mode = TutorMode.CHAT,
+            language = "Python",
+            level = LearnerLevel.BEGINNER,
+            engine = EngineType.CLOUD
+        )
+        coEvery { chatRepository.getConversation(55L) } returns conv
+        viewModel.initConversation(55L)
+        advanceUntilIdle()
+        assertEquals(55L, viewModel.uiState.value.conversationId)
+
+        // Simulate returning to Chat tab with null conversationId
+        viewModel.initConversation(null)
+        advanceUntilIdle()
+
+        // Conversation 55L must still be preserved!
+        assertEquals(55L, viewModel.uiState.value.conversationId)
+        assertEquals("Active Chat", viewModel.uiState.value.title)
+    }
+
+    @Test
+    fun `startNewConversation resets conversation to clean empty state`() = runTest {
+        val conv = ConversationEntity(
+            id = 77L,
+            userId = 1L,
+            title = "Chat to Clear",
+            mode = TutorMode.CHAT,
+            language = "Python",
+            level = LearnerLevel.BEGINNER,
+            engine = EngineType.CLOUD
+        )
+        coEvery { chatRepository.getConversation(77L) } returns conv
+        viewModel.initConversation(77L)
+        advanceUntilIdle()
+        assertEquals(77L, viewModel.uiState.value.conversationId)
+
+        // User taps New Chat
+        viewModel.startNewConversation()
+        advanceUntilIdle()
+
+        assertEquals(null, viewModel.uiState.value.conversationId)
+        assertEquals("New Chat", viewModel.uiState.value.title)
+        assertTrue(viewModel.uiState.value.isEmpty)
+        assertEquals(0, viewModel.uiState.value.messages.size)
     }
 }
