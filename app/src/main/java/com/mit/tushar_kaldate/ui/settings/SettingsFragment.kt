@@ -55,22 +55,26 @@ class SettingsFragment : Fragment() {
             findNavController().navigate(R.id.action_settings_to_models)
         }
 
-        binding.rgTheme.setOnCheckedChangeListener { _, checkedId ->
-            val mode = when (checkedId) {
-                R.id.rbThemeLight -> ThemeMode.LIGHT
-                R.id.rbThemeDark -> ThemeMode.DARK
-                else -> ThemeMode.SYSTEM
-            }
-            viewModel.setTheme(mode)
+        // Use direct click listeners on RadioButtons so programmatic updates from the ViewModel
+        // never trigger an infinite feedback loop.
+        binding.rbThemeSystem.setOnClickListener {
+            viewModel.setTheme(ThemeMode.SYSTEM)
+        }
+        binding.rbThemeLight.setOnClickListener {
+            viewModel.setTheme(ThemeMode.LIGHT)
+        }
+        binding.rbThemeDark.setOnClickListener {
+            viewModel.setTheme(ThemeMode.DARK)
         }
 
-        binding.rgEngine.setOnCheckedChangeListener { _, checkedId ->
-            val engine = when (checkedId) {
-                R.id.rbEngineCloud -> EngineType.CLOUD
-                R.id.rbEngineLocal -> EngineType.LOCAL
-                else -> EngineType.AUTO
-            }
-            viewModel.setDefaultEngine(engine)
+        binding.rbEngineAuto.setOnClickListener {
+            viewModel.setDefaultEngine(EngineType.AUTO)
+        }
+        binding.rbEngineCloud.setOnClickListener {
+            viewModel.setDefaultEngine(EngineType.CLOUD)
+        }
+        binding.rbEngineLocal.setOnClickListener {
+            viewModel.setDefaultEngine(EngineType.LOCAL)
         }
 
         binding.btnClearChatData.setOnClickListener {
@@ -108,30 +112,24 @@ class SettingsFragment : Fragment() {
                         binding.tvProfileEmail.text = email
                         binding.chipGuestBadge.isVisible = state.isGuest
 
-                        // Theme
-                        when (state.themeMode) {
-                            ThemeMode.SYSTEM -> if (binding.rgTheme.checkedRadioButtonId != R.id.rbThemeSystem) {
-                                binding.rbThemeSystem.isChecked = true
-                            }
-                            ThemeMode.LIGHT -> if (binding.rgTheme.checkedRadioButtonId != R.id.rbThemeLight) {
-                                binding.rbThemeLight.isChecked = true
-                            }
-                            ThemeMode.DARK -> if (binding.rgTheme.checkedRadioButtonId != R.id.rbThemeDark) {
-                                binding.rbThemeDark.isChecked = true
-                            }
+                        // Theme: programmatically check without triggering click listeners
+                        val targetThemeRadioId = when (state.themeMode) {
+                            ThemeMode.SYSTEM -> R.id.rbThemeSystem
+                            ThemeMode.LIGHT -> R.id.rbThemeLight
+                            ThemeMode.DARK -> R.id.rbThemeDark
+                        }
+                        if (binding.rgTheme.checkedRadioButtonId != targetThemeRadioId) {
+                            binding.rgTheme.check(targetThemeRadioId)
                         }
 
-                        // Engine
-                        when (state.defaultEngine) {
-                            EngineType.AUTO -> if (binding.rgEngine.checkedRadioButtonId != R.id.rbEngineAuto) {
-                                binding.rbEngineAuto.isChecked = true
-                            }
-                            EngineType.CLOUD -> if (binding.rgEngine.checkedRadioButtonId != R.id.rbEngineCloud) {
-                                binding.rbEngineCloud.isChecked = true
-                            }
-                            EngineType.LOCAL -> if (binding.rgEngine.checkedRadioButtonId != R.id.rbEngineLocal) {
-                                binding.rbEngineLocal.isChecked = true
-                            }
+                        // Engine: programmatically check without triggering click listeners
+                        val targetEngineRadioId = when (state.defaultEngine) {
+                            EngineType.AUTO -> R.id.rbEngineAuto
+                            EngineType.CLOUD -> R.id.rbEngineCloud
+                            EngineType.LOCAL -> R.id.rbEngineLocal
+                        }
+                        if (binding.rgEngine.checkedRadioButtonId != targetEngineRadioId) {
+                            binding.rgEngine.check(targetEngineRadioId)
                         }
 
                         // Gemini API Key Status

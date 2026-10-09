@@ -25,5 +25,7 @@ Every non-obvious choice (library, version, trade-off) must be recorded here wit
 | 2026-10-10 | Open `AuthRepository` + `FakeAuthRepository` in tests | Avoids MockK reflection `ClassCastException` with Kotlin inline value class `Result` in coroutines |
 | 2026-10-10 | Single-Activity Route Guard via `isLoggedIn` Flow | Replaces blocking route checks with coroutine flow collection to never block the main thread |
 | 2026-10-10 | Reactive Theme Application | Observes DataStore `themeMode` and dynamically calls `AppCompatDelegate.setDefaultNightMode()` |
+| 2026-10-10 | `RadioButton.setOnClickListener` in Settings | Prevents infinite loop where `RadioGroup.setOnCheckedChangeListener` was re-triggered by programmatic DataStore state updates and Activity recreation |
+
 
 

@@ -41,12 +41,15 @@ class AuthSessionTest {
             onView(withId(R.id.cardGreeting)).check(matches(isDisplayed()))
 
             // 4. Navigate to Settings
-            onView(withId(R.id.navigation_settings)).perform(click())
+            scenario.onActivity { activity ->
+                val navHost = activity.supportFragmentManager.findFragmentById(R.id.navHostFragment) as androidx.navigation.fragment.NavHostFragment
+                navHost.navController.navigate(R.id.navigation_settings)
+            }
             onView(withId(R.id.cardUserProfile)).check(matches(isDisplayed()))
 
             // 5. Click Logout and confirm dialog
             onView(withId(R.id.btnLogout)).perform(click())
-            onView(withId(android.R.id.button1)).perform(click())
+            onView(androidx.test.espresso.matcher.ViewMatchers.withText(R.string.action_logout)).perform(click())
 
             // 6. Should return to Login screen
             onView(withId(R.id.cardLogin)).check(matches(isDisplayed()))
