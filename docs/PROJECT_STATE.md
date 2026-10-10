@@ -38,7 +38,12 @@ Done:
   * `ModelManagerViewModel`: Manages catalog state, enqueues WorkManager downloads, observes progress, handles deletion and quick inference test
   * `ModelManagerAdapter`: ListAdapter binding items dynamically with Material 3 theme colors
   * `ModelManagerFragment`: Full screen interaction with SAF picker and confirmation dialogs
-- Automated Unit Tests (112/112 passed, 0 failures, 0 skipped):
+- Implemented Offline Programming Tutor Knowledge Base (`OfflineTutorKnowledgeBase.kt`):
+  * Rich DSA explanations and syntax-tagged code in Java, Python, C++, and Kotlin
+  * Support for BFS, DFS, Dijkstra, TopoSort, MST (Kruskal/Prim), Trie, BST, Sorting (Quick/Merge/Bubble/Insertion/Selection), Lists, Stacks, Queues, HashMaps, Heaps, DP, OOP, Interfaces vs Abstract classes, and Big-O complexity
+  * Replaces canned fallback stub with structured, pedagogically sound responses and multi-language code generation
+- Automated Unit Tests (117/117 passed, 0 failures, 0 skipped):
+  * `OfflineTutorKnowledgeBaseTest`: 5 tests
   * `ModelCatalogTest`: 3 tests
   * `DeviceCapabilityCheckerTest`: 5 tests
   * `ModelManagerTest`: 6 tests

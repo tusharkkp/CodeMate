@@ -136,72 +136,7 @@ class LiteRtLocalEngine(
     fun getLoadedModel(): File? = loadedModelFile
 
     private fun generateOfflineResponseTokens(request: LlmRequest, modelFile: File): List<String> {
-        val promptLower = request.prompt.lowercase()
-        val modelTierName = modelFile.nameWithoutExtension
-
-        val responseText = when {
-            promptLower.contains("hello") || promptLower.contains("hi") -> {
-                "Hello! I am CodeMate running 100% offline via your on-device model (`$modelTierName`). How can I help you with your code today?"
-            }
-            promptLower.contains("binary search") -> {
-                """
-                Here is how Binary Search works:
-
-                Binary search efficiently finds a target in a **sorted array** in **O(log n)** time by repeatedly dividing the search interval in half.
-
-                ```java
-                public int binarySearch(int[] arr, int target) {
-                    int left = 0, right = arr.length - 1;
-                    while (left <= right) {
-                        int mid = left + (right - left) / 2;
-                        if (arr[mid] == target) return mid;
-                        if (arr[mid] < target) left = mid + 1;
-                        else right = mid - 1;
-                    }
-                    return -1; // Not found
-                }
-                ```
-                *Running locally with zero data usage via on-device AI.*
-                """.trimIndent()
-            }
-            promptLower.contains("dijkstra") -> {
-                """
-                ### Dijkstra's Shortest Path Algorithm (Offline Model)
-
-                Dijkstra's algorithm finds the shortest path between nodes in a graph with non-negative edge weights.
-
-                **Time Complexity:** O((V + E) log V) using a Priority Queue / Min-Heap.
-
-                ```python
-                import heapq
-
-                def dijkstra(graph, start):
-                    distances = {node: float('inf') for node in graph}
-                    distances[start] = 0
-                    pq = [(0, start)]
-
-                    while pq:
-                        curr_dist, curr_node = heapq.heappop(pq)
-                        if curr_dist > distances[curr_node]:
-                            continue
-                        for neighbor, weight in graph[curr_node].items():
-                            distance = curr_dist + weight
-                            if distance < distances[neighbor]:
-                                distances[neighbor] = distance
-                                heapq.heappush(pq, (distance, neighbor))
-                    return distances
-                ```
-                """.trimIndent()
-            }
-            else -> {
-                "I am running offline on your device using the `$modelTierName` model.\n\n" +
-                        "Here is the solution for your request:\n\n" +
-                        "```kotlin\n// CodeMate Offline Solution\nfun solve() {\n    println(\"Processing prompt: ${request.prompt.take(40)}...\")\n}\n```\n\n" +
-                        "Feel free to ask me to debug, explain, or generate code!"
-            }
-        }
-
-        // Split into words and tokens with whitespace preserved for realistic streaming
+        val responseText = OfflineTutorKnowledgeBase.generateResponse(request, modelFile)
         val regex = Regex("""\S+|\s+""")
         return regex.findAll(responseText).map { it.value }.toList()
     }
