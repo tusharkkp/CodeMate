@@ -30,7 +30,7 @@ class AuthSessionTest {
 
     @Test
     fun guestLoginFlow_navigatesToHome_andLogoutReturnsToLogin() {
-        ActivityScenario.launch(MainActivity::class.java).use {
+        ActivityScenario.launch(MainActivity::class.java).use { scenario ->
             // 1. Should be on login screen
             onView(withId(R.id.cardLogin)).check(matches(isDisplayed()))
 
