@@ -62,4 +62,26 @@ class OfflineTutorKnowledgeBaseTest {
         assertTrue(response.contains("Concept Overview"))
         assertFalse(response.contains("Processing prompt:"))
     }
+
+    @Test
+    fun `generateResponse for datatypes in cpp returns comprehensive C++ types guide`() {
+        val request = LlmRequest(prompt = "datatypes in cpp")
+        val response = OfflineTutorKnowledgeBase.generateResponse(request, dummyModelFile)
+
+        assertTrue(response.contains("Data Types in C++"))
+        assertTrue(response.contains("```cpp"))
+        assertTrue(response.contains("#include <iostream>"))
+        assertTrue(response.contains("std::cout"))
+        assertFalse(response.contains("public class Example"))
+    }
+
+    @Test
+    fun `generateResponse for sum 2 numbers returns complete runnable program`() {
+        val request = LlmRequest(prompt = "write a program to sum 2 numbers")
+        val response = OfflineTutorKnowledgeBase.generateResponse(request, dummyModelFile)
+
+        assertTrue(response.contains("Sum Two Numbers"))
+        assertTrue(response.contains("num1 + num2"))
+        assertFalse(response.contains("Executing write a program to sum 2 numbers solution"))
+    }
 }

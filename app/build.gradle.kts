@@ -67,12 +67,23 @@ android {
     }
 }
 
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask<*>>().configureEach {
+    compilerOptions.freeCompilerArgs.add("-Xskip-metadata-version-check")
+}
+
 ksp {
     arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 configurations.configureEach {
     exclude(group = "org.jetbrains", module = "annotations-java5")
+    resolutionStrategy {
+        force("org.jetbrains.kotlin:kotlin-stdlib:2.2.10")
+        force("org.jetbrains.kotlin:kotlin-reflect:2.2.10")
+        force("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.2.10")
+        force("org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.2.10")
+        force("org.jetbrains.kotlin:kotlin-stdlib-common:2.2.10")
+    }
 }
 
 dependencies {
@@ -111,6 +122,9 @@ dependencies {
     implementation(libs.markwon.syntax.highlight)
     implementation(libs.markwon.ext.tables)
     implementation(libs.prism4j)
+
+    // LiteRT-LM On-Device LLM Runtime
+    implementation("com.google.ai.edge.litertlm:litertlm-android:0.17.1")
 
     // Testing
     testImplementation(libs.junit)

@@ -37,3 +37,4 @@ Every non-obvious choice (library, version, trade-off) must be recorded here wit
 | 2026-10-10 | Application `onTrimMemory` model unloading | Automatically closes and unloads heavy model weights when Android triggers TRIM_MEMORY_RUNNING_CRITICAL to prevent LMK crashes |
 | 2026-10-10 | Dynamic `MaterialColors.getColor` in Adapter | Automatically resolves active Material 3 theme colors across day/night modes in custom RecyclerView holders |
 | 2026-10-10 | Offline Tutor Knowledge Base (`OfflineTutorKnowledgeBase`) | Replaces canned stub responses in LiteRtLocalEngine with rich, domain-aware algorithmic explanations, syntax-tagged code in Java/Python/C++/Kotlin, and Big-O analysis for on-device chat |
+| 2026-10-10 | Official `litertlm-android:0.17.1` Runtime Integration | Integrates native Google LiteRT-LM runtime (`Engine`, `Conversation`, `liblitertlm_jni.so`) with Kotlin 2.2.10 stdlib alignment and graceful fallback to `OfflineTutorKnowledgeBase` |

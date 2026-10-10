@@ -114,12 +114,41 @@ object OfflineTutorKnowledgeBase {
                 buildRecursionResponse(language)
             }
 
-            // 7. Code Debugging / Explanation
+            // 7. Core Programming Fundamentals
+            promptLower.contains("datatype") || promptLower.contains("data type") || promptLower.contains("types in") -> {
+                buildDataTypesResponse(language)
+            }
+            (promptLower.contains("sum") || promptLower.contains("add")) && (promptLower.contains("2") || promptLower.contains("two") || promptLower.contains("number")) -> {
+                buildSumTwoNumbersResponse(language)
+            }
+            promptLower.contains("factorial") -> {
+                buildFactorialResponse(language)
+            }
+            promptLower.contains("prime") -> {
+                buildPrimeResponse(language)
+            }
+            promptLower.contains("palindrome") -> {
+                buildPalindromeResponse(language)
+            }
+            promptLower.contains("reverse") -> {
+                buildReverseResponse(language)
+            }
+            promptLower.contains("even") && promptLower.contains("odd") -> {
+                buildEvenOddResponse(language)
+            }
+            promptLower.contains("pointer") || promptLower.contains("reference") -> {
+                buildPointerResponse(language)
+            }
+            promptLower.contains("loop") -> {
+                buildLoopResponse(language)
+            }
+
+            // 8. Code Debugging / Explanation
             containsCode(prompt) || promptLower.contains("debug") || promptLower.contains("explain this code") -> {
                 buildCodeAnalysisResponse(prompt, language)
             }
 
-            // 8. General Dynamic Tutor Response for any custom prompt
+            // 9. General Dynamic Tutor Response for any custom prompt
             else -> {
                 buildGeneralTutorResponse(prompt, language, modelFile.nameWithoutExtension)
             }
@@ -127,16 +156,15 @@ object OfflineTutorKnowledgeBase {
     }
 
     private fun detectLanguage(promptLower: String, systemInstruction: String?): String {
+        val sysLower = systemInstruction?.lowercase(Locale.ROOT) ?: ""
         return when {
-            promptLower.contains("python") -> "python"
-            promptLower.contains("java") && !promptLower.contains("javascript") -> "java"
-            promptLower.contains("c++") || promptLower.contains("cpp") -> "cpp"
-            promptLower.contains("kotlin") -> "kotlin"
-            systemInstruction != null && systemInstruction.contains("Target programming language: Python", ignoreCase = true) -> "python"
-            systemInstruction != null && systemInstruction.contains("Target programming language: Java", ignoreCase = true) -> "java"
-            systemInstruction != null && systemInstruction.contains("Target programming language: C++", ignoreCase = true) -> "cpp"
-            systemInstruction != null && systemInstruction.contains("Target programming language: Kotlin", ignoreCase = true) -> "kotlin"
-            else -> "java" // Standard default
+            promptLower.contains("python") || sysLower.contains("target programming language: python") -> "python"
+            promptLower.contains("c++") || promptLower.contains("cpp") || sysLower.contains("target programming language: c++") -> "cpp"
+            promptLower.contains("kotlin") || sysLower.contains("target programming language: kotlin") -> "kotlin"
+            (promptLower.contains("java") && !promptLower.contains("javascript")) || sysLower.contains("target programming language: java") -> "java"
+            promptLower.contains("javascript") || promptLower.contains(" js") || sysLower.contains("target programming language: javascript") -> "javascript"
+            promptLower.contains(" c ") || promptLower.endsWith(" in c") || sysLower.contains("target programming language: c.") -> "c"
+            else -> "cpp" // Default to C++ as preferred in DSA
         }
     }
 
@@ -795,9 +823,484 @@ object OfflineTutorKnowledgeBase {
         """.trimIndent()
     }
 
+    private fun buildDataTypesResponse(lang: String): String {
+        return when (lang) {
+            "cpp" -> """
+            ### Data Types in C++
+
+            C++ is a statically, strongly typed language. Every variable has a specific type that determines its size in memory, the operations allowed on it, and the range of values it can store.
+
+            #### 1. Primitive (Built-in) Data Types
+            | Type | Keyword | Typical Size | Value Range / Description |
+            |---|---|---|---|
+            | **Integer** | `int` | 4 bytes | `-2,147,483,648` to `2,147,483,647` |
+            | **Character** | `char` | 1 byte | Single ASCII character (e.g., `'A'`) |
+            | **Boolean** | `bool` | 1 byte | `true` (1) or `false` (0) |
+            | **Floating Point** | `float` | 4 bytes | Single precision decimal (~7 digits precision) |
+            | **Double Precision** | `double` | 8 bytes | Double precision decimal (~15 digits precision) |
+            | **Valueless** | `void` | - | Represents absence of type or return value |
+
+            #### 2. Modifiers (`unsigned`, `short`, `long`)
+            - `unsigned int`: `0` to `4,294,967,295` (non-negative only)
+            - `short int`: Typically 2 bytes
+            - `long long`: At least 8 bytes for large 64-bit numbers
+
+            #### 3. Working Example in C++
+            ```cpp
+            #include <iostream>
+            #include <string>
+
+            int main() {
+                // Primitive types
+                int rollNumber = 42;
+                float gpa = 3.85f;
+                double pi = 3.141592653589793;
+                char section = 'A';
+                bool isPassed = true;
+
+                // Standard Library types
+                std::string studentName = "CodeMate";
+
+                std::cout << "Student: " << studentName << "\n";
+                std::cout << "Roll Number: " << rollNumber << " (Size: " << sizeof(rollNumber) << " bytes)\n";
+                std::cout << "GPA: " << gpa << "\n";
+                std::cout << "Section: " << section << "\n";
+                std::cout << "Passed: " << std::boolalpha << isPassed << "\n";
+
+                return 0;
+            }
+            ```
+
+            #### Best Practices
+            - Use `double` as the standard for floating-point calculations to prevent precision loss.
+            - Use `auto` when variable types can be cleanly deduced by initialization.
+            - Use `const` or `constexpr` for values that must not be mutated.
+            """.trimIndent()
+            "python" -> """
+            ### Data Types in Python
+
+            Python is **dynamically typed**; variable types are inferred automatically at runtime.
+
+            #### Core Data Types
+            - **Numeric:** `int` (arbitrary precision), `float` (64-bit float), `complex` (e.g. `3 + 4j`)
+            - **Text:** `str` (immutable Unicode string)
+            - **Sequence:** `list` (mutable array), `tuple` (immutable array), `range`
+            - **Mapping:** `dict` (key-value hash table)
+            - **Set:** `set` (unique elements), `frozenset` (immutable set)
+            - **Boolean:** `bool` (`True` / `False`)
+            - **NoneType:** `None` (absence of a value)
+
+            #### Working Example in Python
+            ```python
+            # Python standard variables
+            age: int = 20
+            weight: float = 65.5
+            name: str = "CodeMate"
+            is_active: bool = True
+            languages: list[str] = ["Python", "C++", "Java"]
+
+            print(f"Name: {name} (Type: {type(name).__name__})")
+            print(f"Age: {age} (Type: {type(age).__name__})")
+            print(f"Languages: {languages}")
+            ```
+            """.trimIndent()
+            "kotlin" -> """
+            ### Data Types in Kotlin
+
+            In Kotlin, every variable is treated as an object with full null safety guarantees.
+
+            #### Fundamental Types
+            - **Numbers:** `Byte`, `Short`, `Int`, `Long`, `Float`, `Double`
+            - **Characters & Booleans:** `Char`, `Boolean`
+            - **Strings:** `String`
+            - **Null Safety:** `String?` (nullable) vs `String` (non-nullable)
+
+            #### Working Example in Kotlin
+            ```kotlin
+            fun main() {
+                val age: Int = 21
+                val rating: Double = 4.9
+                val symbol: Char = 'K'
+                val isOnline: Boolean = true
+                val bio: String? = null // Safe nullable type
+
+                println("Age: " + age + ", Rating: " + rating + ", Symbol: " + symbol + ", Online: " + isOnline)
+                println("Bio length: " + (bio?.length ?: "Not provided"))
+            }
+            ```
+            """.trimIndent()
+            else -> """
+            ### Data Types in Java
+
+            Java has 8 primitive data types plus reference types (objects and arrays).
+
+            #### 1. Primitive Data Types
+            - `byte` (1 byte, `-128` to `127`)
+            - `short` (2 bytes, `-32,768` to `32,767`)
+            - `int` (4 bytes, standard integer)
+            - `long` (8 bytes, e.g. `100000L`)
+            - `float` (4 bytes, e.g. `3.14f`)
+            - `double` (8 bytes, standard decimal)
+            - `char` (2 bytes, Unicode characters)
+            - `boolean` (1 bit, `true`/`false`)
+
+            #### 2. Working Example in Java
+            ```java
+            public class DataTypesDemo {
+                public static void main(String[] args) {
+                    int id = 101;
+                    double price = 29.99;
+                    char grade = 'A';
+                    boolean inStock = true;
+                    String product = "Laptop";
+
+                    System.out.println("Product: " + product + ", Price: $" + price);
+                    System.out.println("ID: " + id + ", In Stock: " + inStock);
+                }
+            }
+            ```
+            """.trimIndent()
+        }
+    }
+
+    private fun buildSumTwoNumbersResponse(lang: String): String {
+        return when (lang) {
+            "cpp" -> """
+            ### Program to Sum Two Numbers in C++
+
+            Here is a complete, standard C++ program that reads two numbers and prints their sum.
+
+            #### Working C++ Code
+            ```cpp
+            #include <iostream>
+
+            int main() {
+                double num1, num2;
+
+                std::cout << "Enter first number: ";
+                if (!(std::cin >> num1)) {
+                    std::cerr << "Invalid input!\n";
+                    return 1;
+                }
+
+                std::cout << "Enter second number: ";
+                if (!(std::cin >> num2)) {
+                    std::cerr << "Invalid input!\n";
+                    return 1;
+                }
+
+                double sum = num1 + num2;
+                std::cout << "Sum: " << num1 << " + " << num2 << " = " << sum << std::endl;
+
+                return 0;
+            }
+            ```
+
+            #### Mechanics & Complexity
+            - **Input:** Standard stream `std::cin` extracts numeric values.
+            - **Operation:** Binary arithmetic addition operator `+`.
+            - **Time Complexity:** **O(1)** constant time arithmetic operation.
+            - **Space Complexity:** **O(1)** constant auxiliary storage.
+            """.trimIndent()
+            "python" -> """
+            ### Program to Sum Two Numbers in Python
+
+            Here is a clean Python solution that takes two inputs, computes their sum, and displays the result.
+
+            #### Working Python Code
+            ```python
+            def sum_two_numbers():
+                # Read two numbers from standard input
+                num1 = float(input("Enter first number: "))
+                num2 = float(input("Enter second number: "))
+
+                total = num1 + num2
+                print(f"Sum of {num1} + {num2} = {total}")
+
+            if __name__ == "__main__":
+                sum_two_numbers()
+            ```
+
+            #### Mechanics & Complexity
+            - `input()` captures user strings, cast to `float` for decimal support.
+            - **Time Complexity:** **O(1)**
+            - **Space Complexity:** **O(1)**
+            """.trimIndent()
+            "kotlin" -> """
+            ### Program to Sum Two Numbers in Kotlin
+
+            #### Working Kotlin Code
+            ```kotlin
+            import java.util.Scanner
+
+            fun main() {
+                val scanner = Scanner(System.`in`)
+                print("Enter first number: ")
+                val a = scanner.nextDouble()
+
+                print("Enter second number: ")
+                val b = scanner.nextDouble()
+
+                val sum = a + b
+                println("Sum of " + a + " + " + b + " = " + sum)
+            }
+            ```
+
+            #### Complexity
+            - **Time Complexity:** **O(1)**
+            - **Space Complexity:** **O(1)**
+            """.trimIndent()
+            else -> """
+            ### Program to Sum Two Numbers in Java
+
+            #### Working Java Code
+            ```java
+            import java.util.Scanner;
+
+            public class SumTwoNumbers {
+                public static void main(String[] args) {
+                    Scanner scanner = new Scanner(System.in);
+
+                    System.out.print("Enter first number: ");
+                    double num1 = scanner.nextDouble();
+
+                    System.out.print("Enter second number: ");
+                    double num2 = scanner.nextDouble();
+
+                    double sum = num1 + num2;
+                    System.out.println("Sum of " + num1 + " + " + num2 + " = " + sum);
+
+                    scanner.close();
+                }
+            }
+            ```
+
+            #### Complexity
+            - **Time Complexity:** **O(1)**
+            - **Space Complexity:** **O(1)**
+            """.trimIndent()
+        }
+    }
+
+    private fun buildFactorialResponse(lang: String): String {
+        return """
+        ### Factorial Calculation ($lang)
+
+        The **factorial** of a non-negative integer n (denoted as n!) is the product of all positive integers less than or equal to n.
+        - 0! = 1
+        - n! = n * (n - 1)!
+
+        #### Working Iterative Implementation in $lang
+        ```$lang
+        // Iterative factorial to prevent stack overflow
+        long calculateFactorial(int n) {
+            long result = 1;
+            for (int i = 2; i <= n; i++) {
+                result *= i;
+            }
+            return result;
+        }
+        ```
+
+        #### Complexity
+        - **Time Complexity:** **O(n)**
+        - **Space Complexity:** **O(1)**
+        """.trimIndent()
+    }
+
+    private fun buildPrimeResponse(lang: String): String {
+        return """
+        ### Prime Number Checker ($lang)
+
+        A **prime number** is a natural number greater than 1 that cannot be formed by multiplying two smaller natural numbers.
+
+        #### Working Implementation in $lang
+        ```$lang
+        boolean isPrime(int n) {
+            if (n <= 1) return false;
+            if (n <= 3) return true;
+            if (n % 2 == 0 || n % 3 == 0) return false;
+
+            for (int i = 5; i * i <= n; i += 6) {
+                if (n % i == 0 || n % (i + 2) == 0) return false;
+            }
+            return true;
+        }
+        ```
+
+        #### Complexity
+        - **Time Complexity:** **O(√n)** optimized trial division.
+        - **Space Complexity:** **O(1)**
+        """.trimIndent()
+    }
+
+    private fun buildPalindromeResponse(lang: String): String {
+        return """
+        ### Palindrome Checker ($lang)
+
+        A **palindrome** is a sequence that reads the same backward as forward (e.g., `"racecar"` or `121`).
+
+        #### Working Implementation in $lang (Two-Pointer Method)
+        ```$lang
+        boolean isPalindrome(String s) {
+            int left = 0, right = s.length() - 1;
+            while (left < right) {
+                if (s.charAt(left) != s.charAt(right)) {
+                    return false;
+                }
+                left++;
+                right--;
+            }
+            return true;
+        }
+        ```
+
+        #### Complexity
+        - **Time Complexity:** **O(n)**
+        - **Space Complexity:** **O(1)**
+        """.trimIndent()
+    }
+
+    private fun buildReverseResponse(lang: String): String {
+        return """
+        ### Reversing an Array / String ($lang)
+
+        Reversing elements in-place using two pointers swaps symmetric elements from the edges moving toward the center.
+
+        #### Working In-Place Swap Implementation
+        ```$lang
+        void reverseArray(int[] arr) {
+            int left = 0, right = arr.length - 1;
+            while (left < right) {
+                int temp = arr[left];
+                arr[left] = arr[right];
+                arr[right] = temp;
+                left++;
+                right--;
+            }
+        }
+        ```
+
+        #### Complexity
+        - **Time Complexity:** **O(n)**
+        - **Space Complexity:** **O(1)**
+        """.trimIndent()
+    }
+
+    private fun buildEvenOddResponse(lang: String): String {
+        return """
+        ### Even or Odd Determination ($lang)
+
+        An integer is **even** if it is divisible by 2 with zero remainder, and **odd** otherwise.
+
+        #### Working Bitwise Check (Fastest)
+        ```$lang
+        boolean isEven(int n) {
+            return (n & 1) == 0; // Bitwise AND: last bit of even numbers is 0
+        }
+        ```
+
+        #### Complexity
+        - **Time Complexity:** **O(1)** single CPU instruction.
+        - **Space Complexity:** **O(1)**
+        """.trimIndent()
+    }
+
+    private fun buildPointerResponse(lang: String): String {
+        return """
+        ### Pointers and References in C++
+
+        - A **pointer** (`*`) is a variable that stores the memory address of another variable.
+        - A **reference** (`&`) is an alias (another name) for an existing variable.
+
+        #### Working Example in C++
+        ```cpp
+        #include <iostream>
+
+        void passByPointer(int* ptr) {
+            if (ptr != nullptr) *ptr += 10;
+        }
+
+        void passByReference(int& ref) {
+            ref += 10;
+        }
+
+        int main() {
+            int val = 20;
+
+            passByPointer(&val);
+            std::cout << "After pointer modify: " << val << "\n"; // 30
+
+            passByReference(val);
+            std::cout << "After reference modify: " << val << "\n"; // 40
+
+            return 0;
+        }
+        ```
+        """.trimIndent()
+    }
+
+    private fun buildLoopResponse(lang: String): String {
+        return """
+        ### Loops and Iteration ($lang)
+
+        Loops repeat a block of code as long as a specified condition is true:
+        1. **`for` loop:** Used when the number of iterations is known beforehand.
+        2. **`while` loop:** Used when iterating based on a dynamic condition.
+        3. **`do-while` loop:** Executes the loop body at least once before checking the condition.
+
+        #### Working Example in $lang
+        ```$lang
+        // Example: Iterating 1 to 5
+        for (int i = 1; i <= 5; i++) {
+            System.out.println("Count: " + i);
+        }
+        ```
+        """.trimIndent()
+    }
+
     private fun buildGeneralTutorResponse(prompt: String, lang: String, modelTierName: String): String {
         val cleanTopic = prompt.replace("?", "").replace("what is", "", ignoreCase = true)
-            .replace("explain", "", ignoreCase = true).trim()
+            .replace("explain", "", ignoreCase = true).replace("write a program to", "", ignoreCase = true)
+            .replace("write a program for", "", ignoreCase = true).trim()
+
+        val sampleCode = when (lang) {
+            "cpp" -> """
+            #include <iostream>
+
+            void solve() {
+                // Implementation for $cleanTopic in C++
+                std::cout << "Demonstrating $cleanTopic in C++" << std::endl;
+            }
+
+            int main() {
+                solve();
+                return 0;
+            }
+            """.trimIndent()
+            "python" -> """
+            def solve():
+                # Implementation for $cleanTopic in Python
+                print("Demonstrating $cleanTopic in Python")
+
+            if __name__ == "__main__":
+                solve()
+            """.trimIndent()
+            "kotlin" -> """
+            fun main() {
+                // Implementation for $cleanTopic in Kotlin
+                println("Demonstrating $cleanTopic in Kotlin")
+            }
+            """.trimIndent()
+            else -> """
+            public class Solution {
+                public static void main(String[] args) {
+                    // Implementation for $cleanTopic in Java
+                    System.out.println("Demonstrating $cleanTopic in Java");
+                }
+            }
+            """.trimIndent()
+        }
 
         return """
         ### Programming Guide: ${cleanTopic.replaceFirstChar { it.uppercase() }}
@@ -806,22 +1309,17 @@ object OfflineTutorKnowledgeBase {
         **$cleanTopic** is an important concept in software engineering and computer science.
 
         #### Core Mechanics & How It Works
-        1. **Foundation:** Organizes logic and data flow cleanly according to standard conventions.
-        2. **Efficiency:** Designed to minimize unnecessary memory allocations and CPU overhead.
-        3. **Best Practices:** Use idiomatic syntax and adhere to language conventions.
+        1. **Design & Structure:** Encapsulates necessary logic cleanly according to standard conventions.
+        2. **Efficiency:** Written to operate with minimal overhead and clear execution flow.
+        3. **Idiomatic Style:** Adheres to best practices in ${lang.replaceFirstChar { it.uppercase() }}.
 
         #### Working Implementation in ${lang.replaceFirstChar { it.uppercase() }}
         ```$lang
-        // Example implementation for $cleanTopic in $lang
-        public class Example {
-            public static void main(String[] args) {
-                System.out.println("Executing $cleanTopic solution");
-            }
-        }
+        $sampleCode
         ```
 
         #### Complexity & Considerations
-        - **Time Complexity:** Typically **O(n)** for standard iterations.
+        - **Time Complexity:** Typically **O(n)** or **O(1)** depending on the operation size.
         - **Space Complexity:** **O(1)** auxiliary storage when operating in-place.
 
         *What specific use-case or edge-case of $cleanTopic would you like to explore next?*

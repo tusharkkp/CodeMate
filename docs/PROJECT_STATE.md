@@ -38,12 +38,17 @@ Done:
   * `ModelManagerViewModel`: Manages catalog state, enqueues WorkManager downloads, observes progress, handles deletion and quick inference test
   * `ModelManagerAdapter`: ListAdapter binding items dynamically with Material 3 theme colors
   * `ModelManagerFragment`: Full screen interaction with SAF picker and confirmation dialogs
+- Integrated Official LiteRT-LM Native Runtime (`com.google.ai.edge.litertlm:litertlm-android:0.17.1`):
+  * Packaged `liblitertlm_jni.so` native runtime into debug APK
+  * Direct on-device inference via `Engine` and `Conversation` using downloaded `.litertlm` model files
+  * Seamless fallback to `OfflineTutorKnowledgeBase` if native library is unavailable
 - Implemented Offline Programming Tutor Knowledge Base (`OfflineTutorKnowledgeBase.kt`):
   * Rich DSA explanations and syntax-tagged code in Java, Python, C++, and Kotlin
   * Support for BFS, DFS, Dijkstra, TopoSort, MST (Kruskal/Prim), Trie, BST, Sorting (Quick/Merge/Bubble/Insertion/Selection), Lists, Stacks, Queues, HashMaps, Heaps, DP, OOP, Interfaces vs Abstract classes, and Big-O complexity
-  * Replaces canned fallback stub with structured, pedagogically sound responses and multi-language code generation
-- Automated Unit Tests (117/117 passed, 0 failures, 0 skipped):
-  * `OfflineTutorKnowledgeBaseTest`: 5 tests
+  * Core fundamentals: Primitive & modifier data types, sum of two numbers, prime check, factorials, palindromes, in-place reverse, bitwise even/odd, pointers/references, loops
+  * Clean, language-idiomatic syntax across all outputs (no generic Java stubs for C++/Python)
+- Automated Unit Tests (119/119 passed, 0 failures, 0 skipped):
+  * `OfflineTutorKnowledgeBaseTest`: 7 tests
   * `ModelCatalogTest`: 3 tests
   * `DeviceCapabilityCheckerTest`: 5 tests
   * `ModelManagerTest`: 6 tests
@@ -54,7 +59,7 @@ Done:
 - Verification gates:
   * G1 Build: assembleDebug (BUILD SUCCESSFUL)
   * G2 Lint: lintDebug (BUILD SUCCESSFUL, 0 errors)
-  * G3 Unit tests: testDebugUnitTest (BUILD SUCCESSFUL, 112 passed)
+  * G3 Unit tests: testDebugUnitTest (BUILD SUCCESSFUL, 119 passed)
   * G4 Instrumented: Ready for physical device execution over USB
   * G5 Physical phone smoke: Manual checklist provided (debug APK built)
   * G6 Monkey: NOT RUN on personal device per workflow rules

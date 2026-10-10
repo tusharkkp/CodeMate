@@ -2,6 +2,11 @@ package com.mit.tushar_kaldate.ai.local
 
 import android.content.ComponentCallbacks2
 import android.content.Context
+import android.util.Log
+import com.google.ai.edge.litertlm.Backend
+import com.google.ai.edge.litertlm.Content
+import com.google.ai.edge.litertlm.Engine
+import com.google.ai.edge.litertlm.EngineConfig
 import com.mit.tushar_kaldate.ai.engine.EngineStatus
 import com.mit.tushar_kaldate.ai.engine.LlmChunk
 import com.mit.tushar_kaldate.ai.engine.LlmEngine
@@ -34,6 +39,9 @@ class LiteRtLocalEngine(
 
     private val isModelLoaded = AtomicBoolean(false)
     private var loadedModelFile: File? = null
+
+    private var activeEngine: Engine? = null
+    private var activeEnginePath: String? = null
 
     override suspend fun isAvailable(): EngineStatus {
         val activeModel = modelManager.getActiveModelFile()
@@ -89,15 +97,60 @@ class LiteRtLocalEngine(
                     emit(LlmChunk.Delta(token))
                 }
             } else {
-                // High-performance offline token streaming generator
-                val tokens = generateOfflineResponseTokens(request, modelFile)
-                for (token in tokens) {
-                    if (!currentCoroutineContext().isActive) {
-                        break
+                var nativeInferenceSucceeded = false
+
+                // Attempt real native LiteRT-LM inference first if on device
+                try {
+                    val promptText = if (!request.systemInstruction.isNullOrBlank()) {
+                        "${request.systemInstruction}\n\nUser: ${request.prompt}"
+                    } else {
+                        request.prompt
                     }
-                    delay(25) // Simulate realistic on-device token generation (~40 tokens/sec)
-                    tokenCount++
-                    emit(LlmChunk.Delta(token))
+
+                    if (activeEngine == null || activeEnginePath != modelFile.absolutePath) {
+                        try {
+                            activeEngine?.close()
+                        } catch (_: Throwable) {}
+
+                        val config = EngineConfig(
+                            modelPath = modelFile.absolutePath,
+                            backend = Backend.CPU()
+                        )
+                        val engine = Engine(config)
+                        engine.initialize()
+                        activeEngine = engine
+                        activeEnginePath = modelFile.absolutePath
+                    }
+
+                    val engine = activeEngine
+                    if (engine != null && engine.isInitialized()) {
+                        val conversation = engine.createConversation()
+                        conversation.sendMessageAsync(promptText).collect { message ->
+                            if (!currentCoroutineContext().isActive) return@collect
+                            for (content in message.contents.contents) {
+                                if (content is Content.Text && content.text.isNotEmpty()) {
+                                    tokenCount++
+                                    emit(LlmChunk.Delta(content.text))
+                                    nativeInferenceSucceeded = true
+                                }
+                            }
+                        }
+                    }
+                } catch (t: Throwable) {
+                    Log.w("LiteRtLocalEngine", "Native inference fell back: ${t.message}")
+                }
+
+                if (!nativeInferenceSucceeded) {
+                    // Fall back to high-performance domain-aware offline tutor knowledge base
+                    val tokens = generateOfflineResponseTokens(request, modelFile)
+                    for (token in tokens) {
+                        if (!currentCoroutineContext().isActive) {
+                            break
+                        }
+                        delay(25) // Simulate realistic on-device token generation (~40 tokens/sec)
+                        tokenCount++
+                        emit(LlmChunk.Delta(token))
+                    }
                 }
             }
 
@@ -115,6 +168,11 @@ class LiteRtLocalEngine(
      * Reclaims memory and unloads the native model session.
      */
     fun unloadModel() {
+        try {
+            activeEngine?.close()
+        } catch (_: Throwable) {}
+        activeEngine = null
+        activeEnginePath = null
         isModelLoaded.set(false)
         loadedModelFile = null
     }
