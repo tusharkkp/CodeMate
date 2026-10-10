@@ -145,7 +145,9 @@ class SettingsFragment : Fragment() {
                     viewModel.events.collect { event ->
                         when (event) {
                             is SettingsEvent.NavigateToLogin -> {
-                                findNavController().navigate(R.id.action_settings_to_login)
+                                if (findNavController().currentDestination?.id == R.id.navigation_settings) {
+                                    findNavController().navigate(R.id.action_settings_to_login)
+                                }
                             }
                             is SettingsEvent.ShowMessage -> {
                                 Snackbar.make(
